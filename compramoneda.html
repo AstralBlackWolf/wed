@@ -1,156 +1,150 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Compra de Moneda Extranjera</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      background-color: #f0f2f5;
     }
 
     h2 {
       text-align: center;
-      text-decoration: underline;
+      margin-bottom: 30px;
+      color: #333;
     }
 
-    form {
-      width: 60%;
+    .card-form {
+      background-color: #fff;
+      border-radius: 12px;
+      max-width: 500px;
       margin: 0 auto;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     label {
       display: block;
-      margin-top: 10px;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #444;
     }
 
     input, select {
       width: 100%;
-      padding: 8px;
-      margin-top: 4px;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+
+    input[readonly] {
+      background-color: #f9f9f9;
     }
 
     button {
-      margin-top: 15px;
-      padding: 10px 15px;
-      background-color: #1e90ff;
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
       color: white;
       border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
     }
 
     button:hover {
-      background-color: #0066cc;
+      background-color: #0056b3;
     }
   </style>
 </head>
-<body onload="cargarListas()">
+<body>
 
-  <h2>COMPRA DE MONEDA EXTRANJERA</h2>
+  <h2>Compra de Moneda Extranjera</h2>
 
-  <form id="formCompra">
-    <label for="tipoDoc">Tipo de Documento:</label>
-    <select id="tipoDoc" required></select>
+  <div class="card-form">
+    <form id="formCompra">
+      <label for="tipoDoc">Tipo de Documento:</label>
+      <select id="tipoDoc" required></select>
 
-    <label for="numDoc">Número de Documento:</label>
-    <input type="text" id="numDoc" required>
+      <label for="numDoc">Número de Documento:</label>
+      <input type="text" id="numDoc" required />
 
-    <label for="nombreCliente">Nombre del Cliente:</label>
-    <input type="text" id="nombreCliente" readonly>
+      <label for="nombreCliente">Nombre del Cliente:</label>
+      <input type="text" id="nombreCliente" readonly />
 
-    <label for="monedaComprar">Moneda a Comprar:</label>
-    <select id="monedaComprar" required></select>
+      <label for="monedaComprar">Moneda a Comprar:</label>
+      <select id="monedaComprar" required></select>
 
-    <label for="tasaCompra">Tasa de Compra:</label>
-    <input type="text" id="tasaCompra" readonly>
+      <label for="tasaCompra">Tasa de Compra:</label>
+      <input type="text" id="tasaCompra" readonly />
 
-    <label for="cantidadComprar">Cantidad a Comprar:</label>
-    <input type="number" id="cantidadComprar" min="1" required>
+      <label for="cantidadComprar">Cantidad a Comprar:</label>
+      <input type="number" id="cantidadComprar" min="1" required />
 
-    <label for="valorPagar">Valor a Pagar:</label>
-    <input type="text" id="valorPagar" readonly>
+      <label for="valorPagar">Valor a Pagar:</label>
+      <input type="text" id="valorPagar" readonly />
 
-    <label for="fecha">Fecha:</label>
-    <input type="text" id="fecha" readonly>
+      <label for="fecha">Fecha:</label>
+      <input type="text" id="fecha" readonly />
 
-    <label for="hora">Hora:</label>
-    <input type="text" id="hora" readonly>
+      <label for="hora">Hora:</label>
+      <input type="text" id="hora" readonly />
 
-    <button type="submit">Guardar Transacción</button>
-  </form>
+      <button type="submit">Guardar Transacción</button>
+    </form>
+  </div>
 
   <script>
-    function cargarListas() {
-      const tipoDoc = document.getElementById("tipoDoc");
-      const tipos = ["Cédula", "Pasaporte", "Cédula de extranjería"];
-      tipos.forEach(tipo => {
-        let option = document.createElement("option");
-        option.text = tipo;
-        option.value = tipo.toLowerCase();
-        tipoDoc.add(option);
-      });
+    const tiposDocumento = ["Cédula", "Pasaporte", "Cédula de extranjería"];
+    const monedas = {
+      "Dólar": 3800,
+      "Euro": 4300,
+      "Libra Esterlina": 4950,
+    };
 
-      const monedaComprar = document.getElementById("monedaComprar");
-      const monedas = ["Dólar", "Euro"];
-      monedas.forEach(moneda => {
-        let option = document.createElement("option");
-        option.text = moneda;
-        option.value = moneda.toLowerCase();
-        monedaComprar.add(option);
-      });
+    function llenarSelect(id, datos) {
+      const select = document.getElementById(id);
+      select.innerHTML = "<option value=''>-- Seleccione --</option>";
+      if (Array.isArray(datos)) {
+        datos.forEach(op => {
+          select.innerHTML += `<option value="${op}">${op}</option>`;
+        });
+      } else {
+        Object.keys(datos).forEach(mon => {
+          select.innerHTML += `<option value="${mon}">${mon}</option>`;
+        });
+      }
+    }
 
+    function actualizarFechaHora() {
       const now = new Date();
       document.getElementById("fecha").value = now.toLocaleDateString();
       document.getElementById("hora").value = now.toLocaleTimeString();
-
-      monedaComprar.addEventListener("change", actualizarTasa);
-      document.getElementById("cantidadComprar").addEventListener("input", calcularValorPagar);
-
-      document.getElementById("numDoc").addEventListener("blur", function () {
-        const num = this.value.trim();
-        document.getElementById("nombreCliente").value = num ? "Cliente #" + num : "";
-      });
-
-      document.getElementById("formCompra").addEventListener("submit", function (e) {
-        e.preventDefault();
-        if (validarFormulario()) {
-          alert("¡Transacción guardada exitosamente!");
-          this.reset();
-          cargarListas();
-        }
-      });
     }
 
     function actualizarTasa() {
       const moneda = document.getElementById("monedaComprar").value;
-      const tasaCompra = document.getElementById("tasaCompra");
-
-      if (moneda === "dólar") {
-        tasaCompra.value = "3800";
-      } else if (moneda === "euro") {
-        tasaCompra.value = "4300";
-      } else {
-        tasaCompra.value = "";
-      }
-
+      document.getElementById("tasaCompra").value = monedas[moneda] || "";
       calcularValorPagar();
     }
 
     function calcularValorPagar() {
       const tasa = parseFloat(document.getElementById("tasaCompra").value);
       const cantidad = parseFloat(document.getElementById("cantidadComprar").value);
-      const valorPagar = document.getElementById("valorPagar");
-
-      if (!isNaN(tasa) && !isNaN(cantidad)) {
-        valorPagar.value = "$" + (tasa * cantidad).toLocaleString("es-CO");
-      } else {
-        valorPagar.value = "";
-      }
+      const valor = !isNaN(tasa) && !isNaN(cantidad) ? (tasa * cantidad) : 0;
+      document.getElementById("valorPagar").value = valor ? "$" + valor.toLocaleString("es-CO") : "";
     }
 
     function validarFormulario() {
-      const campos = ["tipoDoc", "numDoc", "nombreCliente", "monedaComprar", "tasaCompra", "cantidadComprar"];
+      const campos = ["tipoDoc", "numDoc", "monedaComprar", "tasaCompra", "cantidadComprar"];
       for (let id of campos) {
         const campo = document.getElementById(id);
         if (!campo.value.trim()) {
@@ -161,6 +155,30 @@
       }
       return true;
     }
+
+    window.onload = () => {
+      llenarSelect("tipoDoc", tiposDocumento);
+      llenarSelect("monedaComprar", monedas);
+      actualizarFechaHora();
+      setInterval(actualizarFechaHora, 1000);
+
+      document.getElementById("monedaComprar").addEventListener("change", actualizarTasa);
+      document.getElementById("cantidadComprar").addEventListener("input", calcularValorPagar);
+
+      document.getElementById("numDoc").addEventListener("blur", () => {
+        const num = document.getElementById("numDoc").value.trim();
+        document.getElementById("nombreCliente").value = num ? "Cliente #" + num : "";
+      });
+
+      document.getElementById("formCompra").addEventListener("submit", e => {
+        e.preventDefault();
+        if (validarFormulario()) {
+          alert("¡Transacción guardada exitosamente!");
+          e.target.reset();
+          actualizarFechaHora();
+        }
+      });
+    };
   </script>
 
 </body>
