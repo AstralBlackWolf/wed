@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Indicadores Financieros - App Divisas</title>
+  <title>Indicadores Financieros y Económicos - App Divisas</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,11 +17,13 @@
       margin-bottom: 30px;
     }
 
+    /* Estilo para las cards */
     .contenedor {
       display: flex;
       justify-content: center;
       gap: 30px;
       flex-wrap: wrap;
+      margin-bottom: 40px;
     }
 
     .card {
@@ -55,6 +57,51 @@
       color: #777;
       margin-top: 10px;
     }
+
+    /* Estilo para la tabla */
+    table {
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #ffffff;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #1e90ff;
+      color: white;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    td {
+      font-size: 16px;
+    }
+
+    .fila1 { color: #1e90ff; }
+    .fila2 { color: #28a745; }
+    .fila3 { color: #fd7e14; }
+    .fila4 { color: #6f42c1; }
+    .fila5 { color: #17a2b8; }
+    .fila6 { color: #dc3545; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body onload="cargarIndicadores()">
@@ -75,26 +122,65 @@
     </div>
   </div>
 
+  <h2>Indicadores Económicos del Día</h2>
+
+  <table>
+    <tr>
+      <th>Indicador</th>
+      <th>Valor</th>
+    </tr>
+    <tr class="fila1">
+      <td>Dólar TRM</td>
+      <td>$4.390</td>
+    </tr>
+    <tr class="fila2">
+      <td>Euro TRM</td>
+      <td>$4.492</td>
+    </tr>
+    <tr class="fila3">
+      <td>Libra Café</td>
+      <td>US$2.90</td>
+    </tr>
+    <tr class="fila4">
+      <td>Barril Petróleo WTI</td>
+      <td>US$90.56</td>
+    </tr>
+    <tr class="fila5">
+      <td>Onza Oro</td>
+      <td>US$1.759</td>
+    </tr>
+    <tr class="fila6">
+      <td>Libra Azúcar</td>
+      <td>US$17.77</td>
+    </tr>
+  </table>
+
   <script>
     async function cargarIndicadores() {
-      const API_KEY = "TU_API_KEY_AQUI"; // ← Reemplaza esto por tu clave real
+      const API_KEY = "e8d8e981123e716d6ce57a71";
 
       try {
-        // USD a COP
+        // USD → COP
         const resUSD = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`);
         const dataUSD = await resUSD.json();
         const usdToCop = dataUSD.conversion_rates.COP;
         document.getElementById("usd").textContent = "$" + usdToCop.toLocaleString("es-CO", { maximumFractionDigits: 2 });
-        document.getElementById("fechaUsd").textContent = "Actualizado: " + new Date().toLocaleDateString("es-CO");
+        document.getElementById("fechaUsd").textContent = "Actualizado: " + new Date().toLocaleString("es-CO");
 
-        // EUR a COP
+        // EUR → COP
         const resEUR = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/EUR`);
         const dataEUR = await resEUR.json();
         const eurToCop = dataEUR.conversion_rates.COP;
         document.getElementById("eur").textContent = "$" + eurToCop.toLocaleString("es-CO", { maximumFractionDigits: 2 });
-        document.getElementById("fechaEur").textContent = "Actualizado: " + new Date().toLocaleDateString("es-CO");
+        document.getElementById("fechaEur").textContent = "Actualizado: " + new Date().toLocaleString("es-CO");
 
       } catch (error) {
         console.error("Error al cargar los indicadores:", error);
         document.getElementById("usd").textContent = "Error";
-        document.getElementById("eur").text
+        document.getElementById("eur").textContent = "Error";
+      }
+    }
+  </script>
+
+</body>
+</html>
