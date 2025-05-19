@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Indicadores Financieros - App Divisas</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 30px;
+      background-color: #f4f6f9;
+    }
+
+    h2 {
+      text-align: center;
+      color: #1e90ff;
+      margin-bottom: 30px;
+    }
+
+    .contenedor {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 250px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .moneda {
+      font-size: 20px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .valor {
+      font-size: 26px;
+      color: #1e90ff;
+      font-weight: bold;
+    }
+
+    .actualizado {
+      font-size: 12px;
+      color: #777;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body onload="cargarIndicadores()">
+
+  <h2>Indicadores Financieros en Tiempo Real</h2>
+
+  <div class="contenedor">
+    <div class="card">
+      <div class="moneda">Dólar (USD → COP)</div>
+      <div class="valor" id="usd">Cargando...</div>
+      <div class="actualizado" id="fechaUsd"></div>
+    </div>
+
+    <div class="card">
+      <div class="moneda">Euro (EUR → COP)</div>
+      <div class="valor" id="eur">Cargando...</div>
+      <div class="actualizado" id="fechaEur"></div>
+    </div>
+  </div>
+
+  <script>
+    async function cargarIndicadores() {
+      const API_KEY = "TU_API_KEY_AQUI"; // ← Reemplaza esto por tu clave real
+
+      try {
+        // USD a COP
+        const resUSD = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`);
+        const dataUSD = await resUSD.json();
+        const usdToCop = dataUSD.conversion_rates.COP;
+        document.getElementById("usd").textContent = "$" + usdToCop.toLocaleString("es-CO", { maximumFractionDigits: 2 });
+        document.getElementById("fechaUsd").textContent = "Actualizado: " + new Date().toLocaleDateString("es-CO");
+
+        // EUR a COP
+        const resEUR = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/EUR`);
+        const dataEUR = await resEUR.json();
+        const eurToCop = dataEUR.conversion_rates.COP;
+        document.getElementById("eur").textContent = "$" + eurToCop.toLocaleString("es-CO", { maximumFractionDigits: 2 });
+        document.getElementById("fechaEur").textContent = "Actualizado: " + new Date().toLocaleDateString("es-CO");
+
+      } catch (error) {
+        console.error("Error al cargar los indicadores:", error);
+        document.getElementById("usd").textContent = "Error";
+        document.getElementById("eur").text

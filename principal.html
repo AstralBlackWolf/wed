@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Empresa XYZ - Mercado Cambiario</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      text-decoration: underline;
+    }
+    h2 {
+      margin-top: 30px;
+    }
+    ol {
+      margin-left: 40px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .imagenes {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 30px;
+    }
+    .imagenes img {
+      width: 100px;
+      height: auto;
+    }
+    .botones {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 30px;
+    }
+    .botones button {
+      margin: 5px 0;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Empresa XYZ - Mercado Cambiario</h1>
+  <h2>COMPRA &nbsp;&nbsp;&nbsp; VENTA DE MONEDA EXTRANJERA</h2>
+  <h2>Menú de Operaciones</h2>
+  <ol>
+    <li><a href="indicadores.html" target="_blank">Consultar indicadores económicos</a></li>
+    <li><a href="tasas.html" target="_blank">Consultar tasas de Compra/Venta</a></li>
+    <li><a href="compramoneda.html" target="_blank">Comprar Moneda Extranjera</a></li>
+    <li>Vender Moneda Extranjera (no disponible aún)</li>
+  </ol>
+  <div class="botones">
+    <button onclick="abrirPagina('indicadores.html')">Consultar indicadores económicos</button>
+    <button onclick="abrirPagina('tasas.html')">Consultar tasas de Compra/Venta</button>
+    <button onclick="abrirPagina('compramoneda.html')">Comprar Moneda Extranjera</button>
+  </div>
+  <div class="imagenes">
+    <div>
+      <p style="text-align: center;">Imagen Dólar</p>
+      <img src="dolar.png" alt="Imagen Dólar">
+    </div>
+    <div>
+      <p style="text-align: center;">Imagen Euro</p>
+      <img src="euro.png" alt="Imagen Euro">
+    </div>
+  </div>
+  <script>
+    function abrirPagina(pagina) {
+      window.open(pagina, "_blank");
+    }
+  </script>
+</body>
+</html>
