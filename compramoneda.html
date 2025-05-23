@@ -8,7 +8,20 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 40px 20px;
-      background-color: #f0f2f5;
+      background-image: url('https://images.pexels.com/photos/259165/pexels-photo-259165.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 1000px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
     h2 {
@@ -139,58 +152,60 @@
 </head>
 <body>
 
-  <h2>Compra de Moneda Extranjera</h2>
+  <div class="overlay">
+    <h2>Compra de Moneda Extranjera</h2>
 
-  <div class="card-form">
-    <form id="formCompra">
-      <label for="tipoDoc">Tipo de Documento:</label>
-      <select id="tipoDoc" required></select>
+    <div class="card-form">
+      <form id="formCompra">
+        <label for="tipoDoc">Tipo de Documento:</label>
+        <select id="tipoDoc" required></select>
 
-      <label for="numDoc">Número de Documento:</label>
-      <input type="text" id="numDoc" required />
+        <label for="numDoc">Número de Documento:</label>
+        <input type="text" id="numDoc" required />
 
-      <label for="nombreCliente">Nombre del Cliente:</label>
-      <input type="text" id="nombreCliente" readonly />
+        <label for="nombreCliente">Nombre del Cliente:</label>
+        <input type="text" id="nombreCliente" readonly />
 
-      <label for="monedaComprar">Moneda a Comprar:</label>
-      <select id="monedaComprar" required></select>
+        <label for="monedaComprar">Moneda a Comprar:</label>
+        <select id="monedaComprar" required></select>
 
-      <label for="tasaCompra">Tasa de Compra:</label>
-      <input type="text" id="tasaCompra" readonly />
+        <label for="tasaCompra">Tasa de Compra:</label>
+        <input type="text" id="tasaCompra" readonly />
 
-      <label for="cantidadComprar">Cantidad a Comprar:</label>
-      <input type="number" id="cantidadComprar" min="1" required />
+        <label for="cantidadComprar">Cantidad a Comprar:</label>
+        <input type="number" id="cantidadComprar" min="1" required />
 
-      <label for="valorPagar">Valor a Pagar:</label>
-      <input type="text" id="valorPagar" readonly />
+        <label for="valorPagar">Valor a Pagar:</label>
+        <input type="text" id="valorPagar" readonly />
 
-      <label for="fecha">Fecha:</label>
-      <input type="text" id="fecha" readonly />
+        <label for="fecha">Fecha:</label>
+        <input type="text" id="fecha" readonly />
 
-      <label for="hora">Hora:</label>
-      <input type="text" id="hora" readonly />
+        <label for="hora">Hora:</label>
+        <input type="text" id="hora" readonly />
 
-      <button type="submit">Guardar Transacción</button>
-    </form>
-  </div>
+        <button type="submit">Guardar Transacción</button>
+      </form>
+    </div>
 
-  <div class="historial" id="historial">
-    <h3>Historial de Transacciones</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Documento</th>
-          <th>Nombre</th>
-          <th>Moneda</th>
-          <th>Cantidad</th>
-          <th>Tasa</th>
-          <th>Valor</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-        </tr>
-      </thead>
-      <tbody id="tablaHistorial"></tbody>
-    </table>
+    <div class="historial" id="historial">
+      <h3>Historial de Transacciones</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Documento</th>
+            <th>Nombre</th>
+            <th>Moneda</th>
+            <th>Cantidad</th>
+            <th>Tasa</th>
+            <th>Valor</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+          </tr>
+        </thead>
+        <tbody id="tablaHistorial"></tbody>
+      </table>
+    </div>
   </div>
 
   <script>
