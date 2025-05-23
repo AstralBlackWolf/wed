@@ -262,10 +262,22 @@
       document.getElementById("tablaHistorial").appendChild(fila);
     }
 
+    function guardarEnLocalStorage(transaccion) {
+      let historial = JSON.parse(localStorage.getItem("historialTransacciones")) || [];
+      historial.push(transaccion);
+      localStorage.setItem("historialTransacciones", JSON.stringify(historial));
+    }
+
+    function cargarHistorial() {
+      const historial = JSON.parse(localStorage.getItem("historialTransacciones")) || [];
+      historial.forEach(transaccion => agregarAFilaHistorial(transaccion));
+    }
+
     window.onload = () => {
       llenarSelect("tipoDoc", tiposDocumento);
       llenarSelect("monedaComprar", monedas);
       actualizarFechaHora();
+      cargarHistorial();
       setInterval(actualizarFechaHora, 1000);
 
       document.getElementById("monedaComprar").addEventListener("change", actualizarTasa);
@@ -292,6 +304,7 @@
           };
 
           agregarAFilaHistorial(datos);
+          guardarEnLocalStorage(datos);
           alert("¡Transacción guardada exitosamente!");
           e.target.reset();
           actualizarFechaHora();
