@@ -3,45 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <title>Tasas de Cambio</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 20px;
-      background-color: #f9f9f9;
+      background-image: url('https://media.istockphoto.com/id/1397011551/photo/stack-of-silver-coins-with-trading-chart-in-financial-concepts-and-financial-investment.jpg?s=1024x1024&w=is&k=20&c=x-6SEWUB5mJjFsZgMJg-0Davlr9gtEt0zuy4zOoEw8k=');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
     }
+
     h2 {
       text-align: center;
       margin-bottom: 30px;
-      color: #333;
+      text-shadow: 1px 1px 4px #000;
     }
+
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
+      margin-bottom: 40px;
     }
+
     .card {
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       width: 280px;
       padding: 20px;
       text-align: center;
-      transition: transform 0.2s ease-in-out;
+      transition: transform 0.4s ease-in-out;
+      animation: flotar 6s ease-in-out infinite;
+      color: #003f5c;
     }
+
     .card:hover {
-      transform: scale(1.02);
+      transform: scale(1.05);
     }
+
     .moneda {
       font-size: 1.5em;
       font-weight: bold;
       margin-bottom: 15px;
-      color: #005f99;
     }
+
     .tasa {
       font-size: 1.2em;
       margin: 5px 0;
+    }
+
+    canvas {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 10px;
+      max-width: 90%;
+      margin: 20px auto;
+      display: block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    @keyframes flotar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
   </style>
 </head>
@@ -52,6 +80,12 @@
   <div class="container" id="contenedor-tarjetas">
     <!-- Tarjetas generadas dinámicamente -->
   </div>
+
+  <h2>Gráfica Histórica - Dólar (USD → COP)</h2>
+  <canvas id="graficoDolar" width="600" height="300"></canvas>
+
+  <h2>Gráfica Histórica - Euro (EUR → COP)</h2>
+  <canvas id="graficoEuro" width="600" height="300"></canvas>
 
   <script>
     const tasas = [
@@ -72,6 +106,76 @@
         <div class="tasa"><strong>Venta:</strong> $${venta.toLocaleString()}</div>
       `;
       contenedor.appendChild(tarjeta);
+    });
+
+    // Gráfico histórico Dólar (datos simulados)
+    const ctxDolar = document.getElementById('graficoDolar').getContext('2d');
+    const graficoDolar = new Chart(ctxDolar, {
+      type: 'line',
+      data: {
+        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May'],
+        datasets: [{
+          label: 'USD → COP',
+          data: [3820, 3885, 3970, 4100, 4210],
+          backgroundColor: 'rgba(0, 123, 255, 0.2)',
+          borderColor: 'rgba(0, 123, 255, 1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 5,
+          pointHoverRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: { color: '#003f5c' }
+          },
+          x: {
+            ticks: { color: '#003f5c' }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: '#003f5c' } }
+        }
+      }
+    });
+
+    // Gráfico histórico Euro (datos simulados)
+    const ctxEuro = document.getElementById('graficoEuro').getContext('2d');
+    const graficoEuro = new Chart(ctxEuro, {
+      type: 'line',
+      data: {
+        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May'],
+        datasets: [{
+          label: 'EUR → COP',
+          data: [4250, 4300, 4380, 4450, 4578],
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 5,
+          pointHoverRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: { color: '#67000d' }
+          },
+          x: {
+            ticks: { color: '#67000d' }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: '#67000d' } }
+        }
+      }
     });
   </script>
 
