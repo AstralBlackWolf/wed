@@ -8,16 +8,21 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 30px;
-      background-color: #f4f6f9;
+      background-image: url('https://media.istockphoto.com/id/1420106405/photo/global-inflation-rate.jpg?s=1024x1024&w=is&k=20&c=CS1NxuBTZh3wp5YZt4lpfEdrmY4sWiILQlDeZ4X6Wlw=');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      backdrop-filter: brightness(0.8);
     }
 
     h2 {
       text-align: center;
-      color: #1e90ff;
       margin-bottom: 30px;
+      color: #ffffff;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+      animation: flotar 3s ease-in-out infinite;
     }
 
-    /* Estilo para las cards */
     .contenedor {
       display: flex;
       justify-content: center;
@@ -27,13 +32,14 @@
     }
 
     .card {
-      background-color: #ffffff;
+      background-color: rgba(255, 255, 255, 0.9);
       border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       width: 250px;
       padding: 20px;
       text-align: center;
-      transition: transform 0.2s;
+      transition: transform 0.3s;
+      animation: flotarTarjeta 4s ease-in-out infinite;
     }
 
     .card:hover {
@@ -42,42 +48,41 @@
 
     .moneda {
       font-size: 20px;
-      color: #555;
+      color: #333;
       margin-bottom: 10px;
     }
 
     .valor {
       font-size: 26px;
-      color: #1e90ff;
+      color: #007bff;
       font-weight: bold;
     }
 
     .actualizado {
       font-size: 12px;
-      color: #777;
+      color: #555;
       margin-top: 10px;
     }
 
-    /* Estilo para la tabla */
     table {
       width: 90%;
       max-width: 800px;
       margin: 0 auto;
       border-collapse: collapse;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
       overflow: hidden;
-      background-color: #ffffff;
+      background-color: rgba(255,255,255,0.95);
       animation: fadeIn 0.6s ease-out;
     }
 
     th, td {
       padding: 15px;
       text-align: center;
+      transition: background-color 0.3s, transform 0.3s;
     }
 
     th {
-      background-color: #1e90ff;
+      background-color: #007bff;
       color: white;
       font-size: 16px;
       text-transform: uppercase;
@@ -89,6 +94,13 @@
 
     td {
       font-size: 16px;
+      color: #333;
+    }
+
+    tr:hover {
+      background-color: #e3f2fd;
+      transform: scale(1.02);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .fila1 { color: #1e90ff; }
@@ -101,6 +113,16 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes flotar {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes flotarTarjeta {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
     }
   </style>
 </head>
@@ -160,14 +182,12 @@
       const API_KEY = "e8d8e981123e716d6ce57a71";
 
       try {
-        // USD → COP
         const resUSD = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`);
         const dataUSD = await resUSD.json();
         const usdToCop = dataUSD.conversion_rates.COP;
         document.getElementById("usd").textContent = "$" + usdToCop.toLocaleString("es-CO", { maximumFractionDigits: 2 });
         document.getElementById("fechaUsd").textContent = "Actualizado: " + new Date().toLocaleString("es-CO");
 
-        // EUR → COP
         const resEUR = await fetch(`https://v6.exchangerate-api.com/v6/${API_KEY}/latest/EUR`);
         const dataEUR = await resEUR.json();
         const eurToCop = dataEUR.conversion_rates.COP;
